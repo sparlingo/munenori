@@ -4,8 +4,8 @@
   "description": "A MLB data API",
   "main": "app.js",
   "scripts": {
-    "start": "node ./server/app.js",
-    "develop": "nodemon ./server/app.js"
+    "start": "node app.js",
+    "develop": "nodemon app.js"
   },
   "repository": {
     "type": "git",

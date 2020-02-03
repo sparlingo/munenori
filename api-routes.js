@@ -57,43 +57,43 @@ router.get('/pitchers/:id', function(req, res){
 });
 
 // Routes for teams
-router.get('/teams', function(req, res){
-    Team.find({ teamID: 'TOR' })
-    .then(function(teams){
-        res.json(teams);
-    })
-    .catch(function(err){
-        res.send(err);
-    })
-});
-router.get('/team/:id', function(req, res){
-    Team.find({ teamID: 'TOR' }).where({ yearID: req.params.id })
-    .then(function(team){
-        res.json(team);
-    })
-    .catch(function(err){
-        res.send(err);
-    })
-});
+// router.get('/teams', function(req, res){
+//     Team.find({ teamID: 'TOR' })
+//     .then(function(teams){
+//         res.json(teams);
+//     })
+//     .catch(function(err){
+//         res.send(err);
+//     })
+// });
+// router.get('/team/:id', function(req, res){
+//     Team.find({ teamID: 'TOR' }).where({ yearID: req.params.id })
+//     .then(function(team){
+//         res.json(team);
+//     })
+//     .catch(function(err){
+//         res.send(err);
+//     })
+// });
 
-router.get('/fielders', function(req, res){
-    Fielder.find({ teamID: 'TOR' })
-    .then(function(fielders){
-        res.json(fielders);
-    })
-    .catch(function(err){
-        res.send(err);
-    })
-});
+// router.get('/fielders', function(req, res){
+//     Fielder.find({ teamID: 'TOR' })
+//     .then(function(fielders){
+//         res.json(fielders);
+//     })
+//     .catch(function(err){
+//         res.send(err);
+//     })
+// });
 
-router.get('/managers', function(req, res){
-    Manager.find({ teamID: 'TOR' })
-    .then(function(managers){
-        res.json(managers);
-    })
-    .catch(function(err){
-        res.send(err);
-    })
-});
+// router.get('/managers', function(req, res){
+//     Manager.find({ teamID: 'TOR' })
+//     .then(function(managers){
+//         res.json(managers);
+//     })
+//     .catch(function(err){
+//         res.send(err);
+//     })
+// });
 
 module.exports = router;
