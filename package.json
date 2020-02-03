@@ -1,0 +1,28 @@
+{
+  "name": "munenori",
+  "version": "1.0.0",
+  "description": "A MLB data API",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./server/app.js",
+    "develop": "nodemon ./server/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sparlingo/munenori.git"
+  },
+  "author": "Kevin Sparling",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sparlingo/munenori/issues"
+  },
+  "homepage": "https://github.com/sparlingo/munenori#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "fast-csv": "^3.4.0",
+    "mongoose": "^5.7.14",
+    "mz": "^2.7.0",
+    "stream-to-iterator": "^3.0.2-0"
+  }
+}
