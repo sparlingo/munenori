@@ -16,7 +16,7 @@ const log = data => console.log(JSON.stringify(data, undefined, 2));
 
   try {
     const conn = await mongoose.connect(mongoUri, {useNewUrlParser: true, useUnifiedTopology: true});
-    await Promise.all(Object.entries(conn.models).map(([k,m]) => m.remove()));
+    await Promise.all(Object.entries(conn.models).map(([k,m]) => m.deleteMany()));
 
     let headers = Object.keys(Pitcher.schema.paths)
       .filter(k => ['_id','__v'].indexOf(k) === -1);
