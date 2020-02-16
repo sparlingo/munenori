@@ -2,9 +2,10 @@ let router = require('express').Router();
 require('./models');
 
 // Import models
-var Hitter = require('./models/Hitter');
-var Pitcher = require('./models/Pitcher');
-//var Team = require('./models/Team');
+let Person = require('./models/Person')
+let Hitter = require('./models/Hitter');
+let Pitcher = require('./models/Pitcher');
+var Team = require('./models/Team');
 // var Fielder = require('./models/Fielder');
 // var Manager = require('./models/Manager');
 
@@ -14,6 +15,17 @@ router.get('/', function(req, res){
         message: 'Welcome to Munenori'
     });
 });
+
+// Routes for People
+router.get('/people', function(req, res){
+    Person.find({})
+    .then(function(people){
+        res.json(people)
+    })
+    .catch(function(err){
+        res.send(err)
+    })
+})
 
 // Routes for hitters
 router.get('/hitters', function(req, res){
@@ -25,7 +37,7 @@ router.get('/hitters', function(req, res){
         res.send(err);
     })
 });
-router.get('/hitters/:id', function(req, res){
+router.get('/hitter/:id', function(req, res){
     Hitter.find({ teamID: 'TOR' }).where({ playerID: req.params.id })
     .then(function(hitters){
         res.json(hitters);
@@ -46,7 +58,7 @@ router.get('/pitchers', function(req, res){
         res.send(err);
     })
 });
-router.get('/pitchers/:id', function(req, res){
+router.get('/pitcher/:id', function(req, res){
     Pitcher.find({ teamID: 'TOR' }).where({ playerID: req.params.id })
     .then(function(pitchers){
         res.json(pitchers);
@@ -56,25 +68,25 @@ router.get('/pitchers/:id', function(req, res){
     })
 });
 
-// Routes for teams
-// router.get('/teams', function(req, res){
-//     Team.find({ teamID: 'TOR' })
-//     .then(function(teams){
-//         res.json(teams);
-//     })
-//     .catch(function(err){
-//         res.send(err);
-//     })
-// });
-// router.get('/team/:id', function(req, res){
-//     Team.find({ teamID: 'TOR' }).where({ yearID: req.params.id })
-//     .then(function(team){
-//         res.json(team);
-//     })
-//     .catch(function(err){
-//         res.send(err);
-//     })
-// });
+//Routes for teams
+router.get('/teams', function(req, res){
+    Team.find({ teamID: 'TOR' })
+    .then(function(teams){
+        res.json(teams);
+    })
+    .catch(function(err){
+        res.send(err);
+    })
+});
+router.get('/team/:id', function(req, res){
+    Team.find({ teamID: 'TOR' }).where({ yearID: req.params.id })
+    .then(function(team){
+        res.json(team);
+    })
+    .catch(function(err){
+        res.send(err);
+    })
+});
 
 // router.get('/fielders', function(req, res){
 //     Fielder.find({ teamID: 'TOR' })

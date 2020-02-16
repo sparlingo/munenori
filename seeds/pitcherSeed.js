@@ -7,12 +7,15 @@ const Pitcher = require('../models/Pitcher');
 mongoose.Promise = global.Promise;
 mongoose.set('debug', true);
 
+//const mongoUri = process.env.NODE_ENV === 'development' ? 'mongodb://localhost:27017/munenori' : 'mongodb+srv://tester:futtbucker@cluster0-ggfo2.azure.mongodb.net/test?retryWrites=true&w=majority'
+mongoUri = 'mongodb://127.0.0.1:27017/munenori_test'
+
 const log = data => console.log(JSON.stringify(data, undefined, 2));
 
 (async function() {
 
   try {
-    const conn = await mongoose.connect('mongodb+srv://dbUser:futtbucker@cluster0-uthwo.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
+    const conn = await mongoose.connect(mongoUri, {useNewUrlParser: true, useUnifiedTopology: true});
     await Promise.all(Object.entries(conn.models).map(([k,m]) => m.remove()));
 
     let headers = Object.keys(Pitcher.schema.paths)
