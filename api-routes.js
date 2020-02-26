@@ -39,13 +39,63 @@ router.get('/hitters', function(req, res){
 });
 router.get('/hitter/:id', function(req, res){
     Hitter.find({ teamID: 'TOR' }).where({ playerID: req.params.id })
-    .then(function(hitters){
-        res.json(hitters);
+    .then(function(hitter){
+        res.json(hitter);
     })
     .catch(function(err){
         res.send(err);
     })
 });
+router.get('/hitter/career/:id', function(req, res){
+    Hitter.find({ teamID: 'TOR' }).where({ playerID: req.params.id })
+    .then(function(hitter){
+        let agg = {
+            playerID: req.params.id,
+            G: 0,
+            AB: 0,
+            R: 0,
+            H: 0,
+            doubles: 0,
+            triples: 0,
+            HR: 0,
+            RBI: 0,
+            SB: 0,
+            CS: 0,
+            BB: 0,
+            SO: 0,
+            IBB: 0,
+            HBP: 0,
+            SH: 0,
+            SF: 0,
+            GIDP: 0
+        }
+        
+        hitter.forEach(hit => {
+            agg['G'] += hit.G
+            agg['AB'] += hit.AB
+            agg['R'] += hit.R
+            agg['H'] += hit.H
+            agg['doubles'] += hit.doubles
+            agg['triples'] += hit.triples
+            agg['HR'] += hit.HR
+            agg['RBI'] += hit.RBI
+            agg['SB'] += hit.SB
+            agg['CS'] += hit.CS
+            agg['BB'] += hit.BB
+            agg['SO'] += hit.SO
+            agg['IBB'] += hit.IBB
+            agg['HBP'] += hit.HBP
+            agg['SH'] += hit.SH
+            agg['SF'] += hit.SF
+            agg['GIDP'] += hit.GIDP
+        })
+       
+        res.json(agg)
+    })
+    .catch(function(err){
+        res.send(err)
+    })
+})
 
 
 // Routes for pitchers
