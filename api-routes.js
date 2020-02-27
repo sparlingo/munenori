@@ -117,6 +117,72 @@ router.get('/pitcher/:id', function(req, res){
         res.send(err);
     })
 });
+router.get('/pitcher/career/:id', function(req, res){
+    Pitcher.find({ teamID: 'TOR' }).where({ playerID: req.params.id })
+    .then(function(pitcher){
+        let agg = {
+            playerID: req.params.id,
+            W: 0,
+            L: 0,
+            G: 0,
+            GS: 0,
+            CG: 0,
+            SHO: 0,
+            SV: 0,
+            IPouts: 0,
+            H: 0,
+            ER: 0,
+            HR: 0,
+            BB: 0,
+            SO: 0,
+            BAOpp: 0,
+            ERA: 0,
+            IBB: 0,
+            WP: 0,
+            HBP: 0,
+            BK: 0,
+            BFP: 0,
+            GF: 0,
+            R: 0,
+            SH: 0,
+            SF: 0,
+            GIDP: 0
+        }
+        
+        pitcher.forEach(pitch => {
+            agg['W'] += pitch.W
+            agg['L'] += pitch.L
+            agg['G'] += pitch.G
+            agg['GS'] += pitch.GS
+            agg['CG'] += pitch.CG
+            agg['SHO'] += pitch.SHO
+            agg['SV'] += pitch.SV
+            agg['IPouts'] += pitch.IPouts
+            agg['H'] += pitch.H
+            agg['ER'] += pitch.ER
+            agg['HR'] += pitch.HR
+            agg['BB'] += pitch.BB
+            agg['SO'] += pitch.SO
+            agg['IBB'] += pitch.IBB
+            agg['WP'] += pitch.WP
+            agg['HBP'] += pitch.HBP
+            agg['BK'] += pitch.BK
+            agg['BFP'] += pitch.BFP
+            agg['GF'] += pitch.GF
+            agg['R'] += pitch.R
+            agg['SH'] += pitch.SH
+            agg['SF'] += pitch.SF
+            agg['GIDP'] += pitch.GIDP
+        })
+        agg['ERA'] += (agg.ER / (agg.IPouts / 27))
+        agg['BAOpp'] += (agg.H / agg.BFP)
+
+
+        res.json(agg)
+    }).catch(error => {
+        res.send(error)
+    })
+})
 
 //Routes for teams
 router.get('/teams', function(req, res){
