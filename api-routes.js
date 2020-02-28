@@ -97,13 +97,60 @@ router.get('/hitter/career/:id', function(req, res){
         res.send(err)
     })
 })
-router.get('/hitters/career/', function(req, res){
+
+router.get('/hitters/careers/', function(req, res){
     Hitter.find({ teamID: 'TOR' }) //remove people who have never had an AB
     .then(function(hitters){
-        res.send(_.chain(hitters).groupBy("playerID").map((value, key) => ({
-            playerID: key, stats: value
-        })))
-
+        let allHitters = (_.chain(hitters).groupBy("playerID")
+            .map((value, key) => ({playerID: key, stats: value}
+            ))
+            .value()
+        )
+        let result = []
+        allHitters.forEach(h => {
+            let agg = {
+                playerID: h.playerID,
+                G: 0,
+                AB: 0,
+                R: 0,
+                H: 0,
+                doubles: 0,
+                triples: 0,
+                HR: 0,
+                RBI: 0,
+                SB: 0,
+                CS: 0,
+                BB: 0,
+                SO: 0,
+                IBB: 0,
+                HBP: 0,
+                SH: 0,
+                SF: 0,
+                GIDP: 0
+            }
+            
+            h.stats.forEach(hit => {
+                agg['G'] += hit.G
+                agg['AB'] += hit.AB
+                agg['R'] += hit.R
+                agg['H'] += hit.H
+                agg['doubles'] += hit.doubles
+                agg['triples'] += hit.triples
+                agg['HR'] += hit.HR
+                agg['RBI'] += hit.RBI
+                agg['SB'] += hit.SB
+                agg['CS'] += hit.CS
+                agg['BB'] += hit.BB
+                agg['SO'] += hit.SO
+                agg['IBB'] += hit.IBB
+                agg['HBP'] += hit.HBP
+                agg['SH'] += hit.SH
+                agg['SF'] += hit.SF
+                agg['GIDP'] += hit.GIDP
+            })
+            result.push(agg)
+        })
+        res.send(result)
     })
     .catch(error => {
         res.send(error)
@@ -196,13 +243,75 @@ router.get('/pitcher/career/:id', function(req, res){
         res.send(error)
     })
 })
-router.get('/pitchers/career/', function(req, res){
-    Pitcher.find({ teamID: 'TOR' }) //remove people who have never had a BFP
+router.get('/pitchers/careers/', function(req, res){
+    Pitcher.find({ teamID: 'TOR' })
     .then(function(pitchers){
-        res.send(_.chain(pitchers).groupBy("playerID").map((value, key) => ({
-            playerID: key, stats: value
-        })))
+        let allPitchers = (_.chain(pitchers).groupBy("playerID")
+            .map((value, key) => ({playerID: key, stats: value}
+            ))
+            .value()
+        )
+        let result = []
+        allPitchers.forEach(p => {
+            let agg = {
+                playerID: p.playerID,
+                W: 0,
+                L: 0,
+                G: 0,
+                GS: 0,
+                CG: 0,
+                SHO: 0,
+                SV: 0,
+                IPouts: 0,
+                H: 0,
+                ER: 0,
+                HR: 0,
+                BB: 0,
+                SO: 0,
+                BAOpp: 0,
+                ERA: 0,
+                IBB: 0,
+                WP: 0,
+                HBP: 0,
+                BK: 0,
+                BFP: 0,
+                GF: 0,
+                R: 0,
+                SH: 0,
+                SF: 0,
+                GIDP: 0
+            }
+            p.stats.forEach(pitch => {
+                agg['W'] += pitch.W
+                agg['L'] += pitch.L
+                agg['G'] += pitch.G
+                agg['GS'] += pitch.GS
+                agg['CG'] += pitch.CG
+                agg['SHO'] += pitch.SHO
+                agg['SV'] += pitch.SV
+                agg['IPouts'] += pitch.IPouts
+                agg['H'] += pitch.H
+                agg['ER'] += pitch.ER
+                agg['HR'] += pitch.HR
+                agg['BB'] += pitch.BB
+                agg['SO'] += pitch.SO
+                agg['IBB'] += pitch.IBB
+                agg['WP'] += pitch.WP
+                agg['HBP'] += pitch.HBP
+                agg['BK'] += pitch.BK
+                agg['BFP'] += pitch.BFP
+                agg['GF'] += pitch.GF
+                agg['R'] += pitch.R
+                agg['SH'] += pitch.SH
+                agg['SF'] += pitch.SF
+                agg['GIDP'] += pitch.GIDP
+            })
+            agg['ERA'] += (agg.ER / (agg.IPouts / 27))
+            agg['BAOpp'] += (agg.H / agg.BFP)
 
+            result.push(agg)
+        })
+        res.send(result)
     })
     .catch(error => {
         res.send(error)
