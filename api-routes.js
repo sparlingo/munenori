@@ -1,4 +1,5 @@
 let router = require('express').Router();
+const _ = require("lodash")
 require('./models');
 
 // Import models
@@ -48,7 +49,7 @@ router.get('/hitter/:id', function(req, res){
 });
 router.get('/hitter/career/:id', function(req, res){
     Hitter.find({ teamID: 'TOR' }).where({ playerID: req.params.id })
-    .then(function(hitter){
+    .then(function(hitter){ //remove people who have never had an AB
         let agg = {
             playerID: req.params.id,
             G: 0,
@@ -96,6 +97,18 @@ router.get('/hitter/career/:id', function(req, res){
         res.send(err)
     })
 })
+router.get('/hitters/career/', function(req, res){
+    Hitter.find({ teamID: 'TOR' }) //remove people who have never had an AB
+    .then(function(hitters){
+        res.send(_.chain(hitters).groupBy("playerID").map((value, key) => ({
+            playerID: key, stats: value
+        })))
+
+    })
+    .catch(error => {
+        res.send(error)
+    })
+})
 
 
 // Routes for pitchers
@@ -119,7 +132,7 @@ router.get('/pitcher/:id', function(req, res){
 });
 router.get('/pitcher/career/:id', function(req, res){
     Pitcher.find({ teamID: 'TOR' }).where({ playerID: req.params.id })
-    .then(function(pitcher){
+    .then(function(pitcher){ //remove people who have never had a BFP
         let agg = {
             playerID: req.params.id,
             W: 0,
@@ -180,6 +193,18 @@ router.get('/pitcher/career/:id', function(req, res){
 
         res.json(agg)
     }).catch(error => {
+        res.send(error)
+    })
+})
+router.get('/pitchers/career/', function(req, res){
+    Pitcher.find({ teamID: 'TOR' }) //remove people who have never had a BFP
+    .then(function(pitchers){
+        res.send(_.chain(pitchers).groupBy("playerID").map((value, key) => ({
+            playerID: key, stats: value
+        })))
+
+    })
+    .catch(error => {
         res.send(error)
     })
 })
