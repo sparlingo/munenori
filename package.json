@@ -4,7 +4,7 @@
   "description": "A MLB data API",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "NODE_ENV=production node app.js",
     "develop": "NODE_ENV=development nodemon app.js"
   },
   "repository": {
@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/sparlingo/munenori/issues"
   },
-  "homepage": "https://github.com/sparlingo/munenori#readme",
+  "homepage": "https://munenori.azurewebsites.com/docs",
   "dependencies": {
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
