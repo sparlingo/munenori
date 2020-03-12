@@ -29,15 +29,15 @@ router.get('/people', function(req, res){
 })
 
 // Routes for hitters
-router.get('/hitters', function(req, res){
-    Hitter.find({ teamID: 'TOR' })
-    .then(function(hitters){
-        res.json(hitters);
-    })
-    .catch(function(err){
-        res.send(err);
-    })
-});
+// router.get('/hitters', function(req, res){
+//     Hitter.find({ teamID: 'TOR' })
+//     .then(function(hitters){
+//         res.json(hitters);
+//     })
+//     .catch(function(err){
+//         res.send(err);
+//     })
+// });
 router.get('/hitter/:id', function(req, res){
     Hitter.find({ teamID: 'TOR' }).where({ playerID: req.params.id })
     .then(function(hitter){
@@ -159,15 +159,15 @@ router.get('/hitters/careers/', function(req, res){
 
 
 // Routes for pitchers
-router.get('/pitchers', function(req, res){
-    Pitcher.find({ teamID: 'TOR' })
-    .then(function(pitchers){
-        res.json(pitchers);
-    })
-    .catch(function(err){
-        res.send(err);
-    })
-});
+// router.get('/pitchers', function(req, res){
+//     Pitcher.find({ teamID: 'TOR' })
+//     .then(function(pitchers){
+//         res.json(pitchers);
+//     })
+//     .catch(function(err){
+//         res.send(err);
+//     })
+// });
 router.get('/pitcher/:id', function(req, res){
     Pitcher.find({ teamID: 'TOR' }).where({ playerID: req.params.id })
     .then(function(pitchers){

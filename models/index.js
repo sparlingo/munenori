@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 mongoose.set('debug', true);
 
-
 let database_string = ''
 if (process.env.NODE_ENV === 'production') {
     database_string = process.env.MONGODB_URI
